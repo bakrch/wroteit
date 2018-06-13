@@ -1,0 +1,6 @@
+cmd: node_modules/.bin/gulp
+name: gulp
+sh: false
+env:
+    NODE_ENV: ''
+    FORCE_COLOR: 1

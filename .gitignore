@@ -1,0 +1,8 @@
+node_modules/*
+public/*
+test/artifacts/*
+ignore/*
+build/*
+.env
+*.orig
+*.log
