@@ -99,7 +99,8 @@ const manifest = {
                         Session: './server/models/session',
                         User: './server/models/user',
                         Message: './server/models/message',
-                        Domaine: './server/models/domaine'
+                        Domaine: './server/models/domaine',
+                        Book: './server/models/book'
                     },
                     autoIndex: Config.get('/hapiMongoModels/autoIndex')
                 }
@@ -164,6 +165,12 @@ const manifest = {
         },
         {
             plugin: './server/api/user',
+            options: {
+                routes: { prefix: '/api' }
+            }
+        },
+        {
+            plugin: './server/api/book',
             options: {
                 routes: { prefix: '/api' }
             }
