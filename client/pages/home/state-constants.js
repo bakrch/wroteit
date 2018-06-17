@@ -5,3 +5,4 @@ export const PENDING = 'PENDING';
 export const CANCELLED = 'CANCELLED';
 export const SUBMIT = 'SUBMIT';
 export const FORM = 'FORM';
+export const CHANGE = 'CHANGE';

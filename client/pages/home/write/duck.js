@@ -8,36 +8,34 @@ import { api } from 'Client/services';
 
 
 /* CONSTANTS */
-export const LOGOUT = defineAction('LOGOUT', [REQUEST, SUCCESS, FAILURE]);
+export const MYBOOKS = defineAction('MYBOOKS', [REQUEST, SUCCESS, FAILURE]);
 
 
 
 /* REDUCER */
 const initialState = {
-    data: undefined,
     loading: false,
     success: false,
     error: undefined,
-    response: undefined
+    data: []
 };
 export default function reducer(state = initialState, action = {}) {
 
     switch (action.type) {
-        case LOGOUT.REQUEST:
+        case MYBOOKS.REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case LOGOUT.SUCCESS:
+        case MYBOOKS.SUCCESS:
             return {
                 ...state,
-                data: action.response.data,
                 loading: false,
                 success: true,
                 error: undefined,
-                response: action.response
+                data: action.response
             };
-        case LOGOUT.FAILURE:
+        case MYBOOKS.FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -52,33 +50,32 @@ export default function reducer(state = initialState, action = {}) {
 
 
 /* ACTION CREATORS */
-export const LogoutRequest = () => ({ type: LOGOUT.REQUEST });
-export const LogoutSuccess = (response) => ({ type: LOGOUT.SUCCESS, response });
-export const LogoutFailure = (error) => ({ type: LOGOUT.FAILURE, error });
+export const MybooksRequest = () => ({ type: MYBOOKS.REQUEST });
+export const MybooksSuccess = (response) => ({ type: MYBOOKS.SUCCESS, response });
+export const MybooksFailure = (error) => ({ type: MYBOOKS.FAILURE, error });
 
 
 
 /* SAGA */
-const logoutSaga = function* (data) {
+const mybooksSaga = function* () {
 
     try {
-        const response = yield call(api.delete, '/api/logout');
+        const response = yield call(api.get, '/api/books/me');
         if (response.error) {
-            yield put(LogoutFailure(response.message));
+            yield put(MybooksFailure(response.message));
         }
         else {
-            yield put(LogoutSuccess(response));
-            yield put(push('/'));
+            yield put(MybooksSuccess(response));
         }
     }
     catch (e) {
-        yield put(LogoutFailure(e));
+        yield put(MybooksFailure(e));
     }
 };
 
 const watcherSaga = function* () {
 
-    yield takeLatest(LOGOUT.REQUEST, logoutSaga);
+    yield takeLatest(MYBOOKS.REQUEST, mybooksSaga);
 };
 
 

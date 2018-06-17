@@ -29,15 +29,6 @@ class HomePage extends Component {
                             style={{ minHeight: 700, padding: '1em 0em' }}
                             vertical
                         >
-                            <Header
-                                as='h1'
-                                content='The lost meadow'
-                                style={{
-                                    fontSize: '4em',
-                                    fontWeight: 'bold',
-                                    color: 'white',
-                                    marginBottom: 0
-                                }} />
 
                             <MDEditor />
 

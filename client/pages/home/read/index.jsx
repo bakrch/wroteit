@@ -5,39 +5,75 @@ import PropTypes from 'prop-types';
 
 import { Divider, Grid, Card, Button, Image, Header } from 'semantic-ui-react';
 
+import { BrowseRequest } from './duck';
+
 import Link from 'Client/components/link';
 import FixedMenu from 'Home/menu';
 
-const BookCard = () => (
+const BookCard = (props) => {
 
-    <Card className='book-card'>
-        <Card.Content>
-            <Image floated='right' size='small' src='https://marketplace.canva.com/MAB5Wq3gOAs/2/0/thumbnail_large/canva-pink-sunrise-photo-quote-poster-MAB5Wq3gOAs.jpg' />
-            <Card.Header
-                floated='left'
-                style={{
-                    paddingTop: '30%'
-                }}>
-                Go into the light</Card.Header>
-            <Card.Meta>By fakedeep author</Card.Meta>
-            <Card.Description textAlign='center'>
-                ``A must read in sci-fi``
-            </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-            <div className='ui two buttons'>
-                <Button basic color='yellow'>
-                    Start reading
-                </Button>
-            </div>
-        </Card.Content>
-    </Card>
-);
-
+    if (props.data){
+        return (
+            <Card className='book-card'>
+                <Card.Content>
+                    <Image floated='right' size='small' src='https://marketplace.canva.com/MAB5Wq3gOAs/2/0/thumbnail_large/canva-pink-sunrise-photo-quote-poster-MAB5Wq3gOAs.jpg' />
+                    <Card.Header
+                        floated='left'
+                        style={{
+                            paddingTop: '30%'
+                        }}>
+                        {props.data.title}</Card.Header>
+                    <Card.Meta>By {props.data.author}</Card.Meta>
+                    <Card.Description textAlign='center'>
+                        {props.data.description}
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <div className='ui two buttons'>
+                        <Button basic color='yellow'>
+                            Start reading
+                        </Button>
+                    </div>
+                </Card.Content>
+            </Card>
+        );
+    }
+    return (<div></div>);
+};
+BookCard.propTypes = {
+    data: PropTypes.object
+};
 class HomePage extends Component {
     static propTypes = {
-        location: PropTypes.string
+        location: PropTypes.string,
+        error: PropTypes.string,
+        data: PropTypes.array,
+        success: PropTypes.bool,
+        loading: PropTypes.bool,
+        browse: PropTypes.func
     }
+    constructor(props){
+
+        super(props);
+        this.renderCards = this.renderCards.bind(this);
+        props.browse();
+    }
+    renderCards(books){
+
+        return books.map(
+            (book) => {
+
+                return (
+                    <Grid.Column key={book._id}>
+                        <BookCard data={book}  />
+                    </Grid.Column >
+
+                );
+            }
+
+        );
+    }
+
     render() {
 
         return (
@@ -59,17 +95,7 @@ class HomePage extends Component {
                         New entries
                     </Header>
                     <Grid.Row columns={3}>
-                        <Grid.Column >
-                            <BookCard />
-                        </Grid.Column>
-
-                        <Grid.Column >
-                            <BookCard />
-                        </Grid.Column>
-
-                        <Grid.Column >
-                            <BookCard />
-                        </Grid.Column>
+                        {this.props.data && this.renderCards(this.props.data)}
 
                     </Grid.Row>
 
@@ -85,17 +111,7 @@ class HomePage extends Component {
                         Best rated
                     </Header>
                     <Grid.Row columns={3}>
-                        <Grid.Column >
-                            <BookCard />
-                        </Grid.Column>
-
-                        <Grid.Column >
-                            <BookCard />
-                        </Grid.Column>
-
-                        <Grid.Column >
-                            <BookCard />
-                        </Grid.Column>
+                        {this.props.data && this.renderCards(this.props.data)}
 
                     </Grid.Row>
                 </Grid>
@@ -104,12 +120,23 @@ class HomePage extends Component {
         );
     }
 }
-
-const mapStateToProps = (state, ownProps) => { // @TODO
+const mapDispatchToProps = (dispatch) => {
 
     return {
-        location: ownProps.location.pathname
+        browse: () => dispatch(BrowseRequest())
+    };
+};
+const mapStateToProps = (state, ownProps) => {
+
+    return {
+        location: ownProps.location.pathname,
+        response: state.BrowseReducer.response,
+        success: state.BrowseReducer.success,
+        data: state.BrowseReducer.data
     };
 };
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HomePage);

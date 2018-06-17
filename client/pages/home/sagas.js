@@ -1,6 +1,10 @@
 import { fork, all } from 'redux-saga/effects';
 
 import { sagas as LogoutSaga } from './logout/duck';
+import { sagas as BrowseSaga } from './read/duck';
+import { sagas as MybooksSaga } from './write/duck';
+import { sagas as NewbookSaga } from './write/newBookForm/duck';
+import { sagas as SavebookSaga } from './write/writer/duck';
 
 
 
@@ -8,7 +12,11 @@ import { sagas as LogoutSaga } from './logout/duck';
 export default function* () {
 
     yield all([
-        ...LogoutSaga
+        ...LogoutSaga,
+        ...BrowseSaga,
+        ...MybooksSaga,
+        ...NewbookSaga,
+        ...SavebookSaga
     ].map((x) => fork(x))
     );
 }

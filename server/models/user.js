@@ -294,11 +294,8 @@ User.collection = 'users';
 
 User.schema = Joi.object({
     _id: Joi.object(),
-    /* @TODO add these to an object + $unset them instead of true */
     isActive: Joi.boolean().default(false), // confirm email to activate
-    isBlacklisted: Joi.boolean().default(false), // admin to activate
-    isAvailable: Joi.boolean().default(false), // Switch off through settings
-    isProfileCompleted: Joi.boolean().default(false), // complete profile to activate - not used for now
+    isBlacklisted: Joi.boolean().default(false),
     penName: Joi.string().lowercase().required(),
     email: Joi.string().email().lowercase().required(),
 

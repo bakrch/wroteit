@@ -8,36 +8,34 @@ import { api } from 'Client/services';
 
 
 /* CONSTANTS */
-export const LOGOUT = defineAction('LOGOUT', [REQUEST, SUCCESS, FAILURE]);
+export const BROWSE = defineAction('BROWSE', [REQUEST, SUCCESS, FAILURE]);
 
 
 
 /* REDUCER */
 const initialState = {
-    data: undefined,
     loading: false,
     success: false,
     error: undefined,
-    response: undefined
+    data: []
 };
 export default function reducer(state = initialState, action = {}) {
 
     switch (action.type) {
-        case LOGOUT.REQUEST:
+        case BROWSE.REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case LOGOUT.SUCCESS:
+        case BROWSE.SUCCESS:
             return {
                 ...state,
-                data: action.response.data,
                 loading: false,
                 success: true,
                 error: undefined,
-                response: action.response
+                data: action.response
             };
-        case LOGOUT.FAILURE:
+        case BROWSE.FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -52,33 +50,32 @@ export default function reducer(state = initialState, action = {}) {
 
 
 /* ACTION CREATORS */
-export const LogoutRequest = () => ({ type: LOGOUT.REQUEST });
-export const LogoutSuccess = (response) => ({ type: LOGOUT.SUCCESS, response });
-export const LogoutFailure = (error) => ({ type: LOGOUT.FAILURE, error });
+export const BrowseRequest = (fields) => ({ type: BROWSE.REQUEST, fields });
+export const BrowseSuccess = (response) => ({ type: BROWSE.SUCCESS, response });
+export const BrowseFailure = (error) => ({ type: BROWSE.FAILURE, error });
 
 
 
 /* SAGA */
-const logoutSaga = function* (data) {
+const browseSaga = function* ({ fields }) {
 
     try {
-        const response = yield call(api.delete, '/api/logout');
+        const response = yield call(api.get, '/api/books', { query: fields });
         if (response.error) {
-            yield put(LogoutFailure(response.message));
+            yield put(BrowseFailure(response.message));
         }
         else {
-            yield put(LogoutSuccess(response));
-            yield put(push('/'));
+            yield put(BrowseSuccess(response));
         }
     }
     catch (e) {
-        yield put(LogoutFailure(e));
+        yield put(BrowseFailure(e));
     }
 };
 
 const watcherSaga = function* () {
 
-    yield takeLatest(LOGOUT.REQUEST, logoutSaga);
+    yield takeLatest(BROWSE.REQUEST, browseSaga);
 };
 
 

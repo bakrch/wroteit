@@ -5,13 +5,64 @@ import PropTypes from 'prop-types';
 
 import { Container, Grid, Segment, Button, Header, Card } from 'semantic-ui-react';
 
+import { MybooksRequest } from './duck';
+
 import Link from 'Client/components/link';
 import FixedMenu from 'Home/menu';
 
+const BookCard = (props) => {
 
+    if (props.data){
+
+        return (
+            <Card>
+                <Card.Content>
+                    <Card.Header>{props.data.title}</Card.Header>
+                    <Card.Meta>{props.data.author}</Card.Meta>
+                    <Card.Description>
+                        {props.data.description}
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <Button basic color='grey' as={Link} to={'/home/write/writer/' + props.data._id}>
+        Continue writing
+                    </Button>
+                </Card.Content>
+            </Card>
+        );
+    }
+    return (<div>loading..</div>);
+};
+
+BookCard.propTypes = {
+    data: PropTypes.object
+};
 class HomePage extends Component {
     static propTypes = {
-        location: PropTypes.string
+        location: PropTypes.string,
+        getBooks: PropTypes.func,
+        error: PropTypes.string,
+        data: PropTypes.array,
+        success: PropTypes.bool,
+        loading: PropTypes.bool
+    }
+    constructor(props){
+
+        super(props);
+        this.renderCards = this.renderCards.bind(this);
+        props.getBooks();
+    }
+    renderCards(books){
+
+        return books.map(
+            (book) => {
+
+                return (
+                    <BookCard data={book} key={book._id} />
+                );
+            }
+
+        );
     }
     render() {
 
@@ -36,50 +87,11 @@ class HomePage extends Component {
                                     fontWeight: 'bold',
                                     color: 'white',
                                     marginBottom: 0,
-                                    marginTop: '3em'
+                                    marginTop: '1.2em'
                                 }} />
                             <Container>
                                 <Card.Group centered>
-                                    <Card>
-                                        <Card.Content>
-                                            <Card.Header>Steve Sanders</Card.Header>
-                                            <Card.Meta>Friends of Elliot</Card.Meta>
-                                            <Card.Description>
-                                                Steve wants to add you to the group <strong>best friends</strong>
-                                            </Card.Description>
-                                        </Card.Content>
-                                        <Card.Content extra>
-                                            <Button basic color='grey' as={Link} to='/home/write/writer/1'>
-                                            Continue
-                                            </Button>
-                                        </Card.Content>
-                                    </Card>
-                                    <Card>
-                                        <Card.Content>
-                                            <Card.Header>Molly Thomas</Card.Header>
-                                            <Card.Meta>New User</Card.Meta>
-                                            <Card.Description>
-                                                Molly wants to add you to the group <strong>musicians</strong>
-                                            </Card.Description>
-                                        </Card.Content>
-                                        <Card.Content extra>
-                                            <Button basic color='grey' as={Link} to='/home/write/writer/2' >
-                                            Continue
-                                            </Button>
-                                        </Card.Content>
-                                    </Card>
-                                    <Card>
-                                        <Card.Content>
-                                            <Card.Header>Jenny Lawrence</Card.Header>
-                                            <Card.Meta>New User</Card.Meta>
-                                            <Card.Description>Jenny requested permission to view your contact details</Card.Description>
-                                        </Card.Content>
-                                        <Card.Content extra>
-                                            <Button basic color='grey' as={Link} to='/home/write/writer/3' >
-                                            Continue
-                                            </Button>
-                                        </Card.Content>
-                                    </Card>
+                                    {this.props.data && this.renderCards(this.props.data)}
                                 </Card.Group>
                             </Container>
 
@@ -91,12 +103,23 @@ class HomePage extends Component {
         );
     }
 }
+const mapDispatchToProps = (dispatch) => {
 
+    return {
+        getBooks: () => dispatch(MybooksRequest())
+    };
+};
 const mapStateToProps = (state, ownProps) => { // @TODO
 
     return {
-        location: ownProps.location.pathname
+        location: ownProps.location.pathname,
+        response: state.MybooksReducer.response,
+        success: state.MybooksReducer.success,
+        data: state.MybooksReducer.data
     };
 };
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HomePage);
