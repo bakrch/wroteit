@@ -16,12 +16,9 @@ const BookCard = (props) => {
         return (
             <Card className='book-card'>
                 <Card.Content>
-                    <Image floated='right' size='small' src='https://marketplace.canva.com/MAB5Wq3gOAs/2/0/thumbnail_large/canva-pink-sunrise-photo-quote-poster-MAB5Wq3gOAs.jpg' />
                     <Card.Header
                         floated='left'
-                        style={{
-                            paddingTop: '30%'
-                        }}>
+                    >
                         {props.data.title}</Card.Header>
                     <Card.Meta>By {props.data.author}</Card.Meta>
                     <Card.Description textAlign='center'>
@@ -30,7 +27,7 @@ const BookCard = (props) => {
                 </Card.Content>
                 <Card.Content extra>
                     <div className='ui two buttons'>
-                        <Button basic color='yellow'>
+                        <Button basic color='grey' as={Link} to={'/home/read/reader/' + props.data._id}>
                             Start reading
                         </Button>
                     </div>
@@ -67,10 +64,8 @@ class HomePage extends Component {
                     <Grid.Column key={book._id}>
                         <BookCard data={book}  />
                     </Grid.Column >
-
                 );
             }
-
         );
     }
 
@@ -120,6 +115,7 @@ class HomePage extends Component {
         );
     }
 }
+
 const mapDispatchToProps = (dispatch) => {
 
     return {

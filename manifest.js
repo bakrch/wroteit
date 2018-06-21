@@ -98,8 +98,6 @@ const manifest = {
                         AuthAttempt: './server/models/auth-attempt',
                         Session: './server/models/session',
                         User: './server/models/user',
-                        Message: './server/models/message',
-                        Domaine: './server/models/domaine',
                         Book: './server/models/book'
                     },
                     autoIndex: Config.get('/hapiMongoModels/autoIndex')
@@ -134,12 +132,6 @@ const manifest = {
             }
         },
         {
-            plugin: './server/api/contact',
-            options: {
-                routes: { prefix: '/api' }
-            }
-        },
-        {
             plugin: './server/api/login',
             options: {
                 routes: { prefix: '/api' }
@@ -158,12 +150,6 @@ const manifest = {
             }
         },
         {
-            plugin: './server/api/me',
-            options: {
-                routes: { prefix: '/api' }
-            }
-        },
-        {
             plugin: './server/api/user',
             options: {
                 routes: { prefix: '/api' }
@@ -171,12 +157,6 @@ const manifest = {
         },
         {
             plugin: './server/api/book',
-            options: {
-                routes: { prefix: '/api' }
-            }
-        },
-        {
-            plugin: './server/api/domaine',
             options: {
                 routes: { prefix: '/api' }
             }

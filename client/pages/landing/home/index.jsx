@@ -30,7 +30,7 @@ class HomePage extends Component {
                         >
                             <Header
                                 as='h1'
-                                content='WRITEIT'
+                                content='WROTEIT'
                                 style={{
                                     fontSize: '4em',
                                     fontWeight: 'bold',

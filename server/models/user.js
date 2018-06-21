@@ -294,14 +294,14 @@ User.collection = 'users';
 
 User.schema = Joi.object({
     _id: Joi.object(),
-    isActive: Joi.boolean().default(false), // confirm email to activate
+    isActive: Joi.boolean().default(false),
     isBlacklisted: Joi.boolean().default(false),
     penName: Joi.string().lowercase().required(),
     email: Joi.string().email().lowercase().required(),
 
     login: Joi.object({
         password: Joi.string(),
-        facebook: Joi.string(), // fb user id
+        facebook: Joi.string(),
         google: Joi.string()
     }),
 

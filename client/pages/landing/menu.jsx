@@ -21,7 +21,7 @@ const FixedMenu = (props) => {
                     paddingTop: '0.1em',
                     paddingBottom: '0em',
                     color: 'white'
-                }}>WRITEIT</Link>
+                }}>WROTEIT</Link>
             </Menu.Item>
             <Menu.Menu position='right'>
                 <Menu.Item className='item'>

@@ -151,7 +151,6 @@ internals.applyRoutes = function (server, next) {
 
                 Book.find(
                     {
-                        author: request.auth.credentials.user._id,
                         _id: MongoModels.ObjectID(request.params.id)
                     },(err, results) => {
 

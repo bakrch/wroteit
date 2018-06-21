@@ -13,7 +13,7 @@ const cookieSecret = '\'F3FX~vjvC;H^gn!UU@~y8dO-Lp9~j|o';
 
 const config = {
     $meta: 'All configs should be listed here.',
-    projectName: 'Writeit',
+    projectName: 'Wroteit',
     port: {
         web: {
             $filter: 'env',
@@ -25,7 +25,7 @@ const config = {
     baseUrl: {
         $filter: 'env',
         $meta: 'values should not end in "/"',
-        production: 'http://writeit.me',
+        production: 'http://wroteit.me',
         $default: 'http://127.0.0.1:8000'
     },
     authAttempts: {

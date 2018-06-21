@@ -1,7 +1,10 @@
 import { fork, all } from 'redux-saga/effects';
 
 import { sagas as LogoutSaga } from './logout/duck';
+
 import { sagas as BrowseSaga } from './read/duck';
+import { sagas as ReaderSaga } from './read/reader/duck';
+
 import { sagas as MybooksSaga } from './write/duck';
 import { sagas as NewbookSaga } from './write/newBookForm/duck';
 import { sagas as SavebookSaga } from './write/writer/duck';
@@ -14,6 +17,7 @@ export default function* () {
     yield all([
         ...LogoutSaga,
         ...BrowseSaga,
+        ...ReaderSaga,
         ...MybooksSaga,
         ...NewbookSaga,
         ...SavebookSaga

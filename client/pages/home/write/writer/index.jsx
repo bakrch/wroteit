@@ -22,7 +22,7 @@ class HomePage extends Component {
                 <Helmet>
                     <title>Wroteit</title>
                 </Helmet>
-                <Grid verticalAlign='middle' centered>
+                <Grid centered>
                     <Grid.Column>
                         <Segment
                             textAlign='center'

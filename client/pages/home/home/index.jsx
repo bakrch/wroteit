@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Container, Grid, Segment, Button, Header } from 'semantic-ui-react';
+import { Container, Grid, Segment, Image, Header } from 'semantic-ui-react';
 
 import Link from 'Client/components/link';
 import FixedMenu from 'Home/menu';
@@ -28,20 +28,11 @@ class HomePage extends Component {
                             style={{ minHeight: 700, padding: '1em 0em' }}
                             vertical
                         >
-                            <Header
-                                as='h1'
-                                content='WRITEIT'
-                                style={{
-                                    fontSize: '4em',
-                                    fontWeight: 'bold',
-                                    color: 'white',
-                                    marginBottom: 0
-                                }}
-                            />
-                            <Header
-                                as='h2'
-                                content='Share your writing prompts..'
-                                style={{ fontSize: '1.7em', fontWeight: 'normal' }}
+                            <Image
+                                src="/public/media/totorit.png"
+                                verticalAlign='middle'
+                                centered
+                                size='huge'
                             />
 
                         </Segment>

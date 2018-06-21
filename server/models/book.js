@@ -15,14 +15,23 @@ class Book extends MongoModels {
             language,
             createdAt: new Date()
         };
-        self.insertOne(book, (err, result) => {
-
-            if (err) {
-                return callback(err);
+        self.insertOne(
+            {
+                author,
+                title,
+                description,
+                genre,
+                language,
+                createdAt: new Date()
             }
+            , (err, result) => {
 
-            callback(null, result[0]);
-        });
+                if (err) {
+                    return callback(err);
+                }
+
+                callback(null, result[0]);
+            });
     }
     static updateBookContent(id, author, content, callback){
 

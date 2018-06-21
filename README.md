@@ -1,4 +1,4 @@
-# WRITEIT
+# WROTEIT
 
 
 ## Pré requis
