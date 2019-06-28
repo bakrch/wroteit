@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('run') {
       steps {
-        bat '''mongod
-        yarn start'''
+        bat 'mongod        yarn install        yarn start'
       }
     }
   }
