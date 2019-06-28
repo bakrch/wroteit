@@ -2,8 +2,17 @@ pipeline {
   agent any
   stages {
     stage('run') {
-      steps {
-        bat 'mongod        yarn install        yarn start'
+      parallel {
+        stage('run') {
+          steps {
+            bat 'yarn install        yarn start'
+          }
+        }
+        stage('mongod') {
+          steps {
+            bat 'mongod'
+          }
+        }
       }
     }
   }
