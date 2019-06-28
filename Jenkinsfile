@@ -1,12 +1,7 @@
 pipeline {
-  agent {
-    node {
-      label 'idk'
-    }
-
-  }
+  agent none
   stages {
-    stage('start') {
+    stage('run') {
       steps {
         sh '''mongod
 yarn start'''
