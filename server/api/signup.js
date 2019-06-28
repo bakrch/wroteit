@@ -73,7 +73,9 @@ internals.applyRoutes = function (server, next) {
                         token: results.token.key
                     };
 
-                    mailer.sendEmail(emailOptions, template, context, done);
+                    //mailer.sendEmail(emailOptions, template, context, done);
+                    console.log(context.token);
+                    done();
                 }],
                 user: ['sendToken', function (results, done) {
 
@@ -138,7 +140,7 @@ internals.applyRoutes = function (server, next) {
 
                     const key = request.payload.key;
                     const token = request.pre.user.activationToken.token;
-                    Bcrypt.compare(key, token, done);
+                    Bcrypt.compare(token, token, done); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! replace token with key in prod !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 },
                 user: ['keyMatch', function (results, done) {
 
