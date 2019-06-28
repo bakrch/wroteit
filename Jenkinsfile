@@ -6,7 +6,7 @@ pipeline {
 
   }
   stages {
-    stage('') {
+    stage('start') {
       steps {
         sh '''mongod
 yarn start'''
